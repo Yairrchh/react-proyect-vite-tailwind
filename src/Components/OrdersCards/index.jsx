@@ -15,7 +15,7 @@ const OrdersCards = props => {
                 </div>
                 <div className="flex justify-between w-full">
                     <span>Total Price</span>
-                    <span className="font-medium text-xl'">{totalPrice}$</span>
+                    <span className="font-medium text-xl">{totalPrice}$</span>
                 </div>
             </div>
         </div>
