@@ -29,8 +29,10 @@ const [order, setOrder] = useState([])
 // get products
 const [items, setItems] = useState(null);
 const [filteredItems, setFilteredItems] = useState(null);
-
+//get products by title
 const [search, setSearch] = useState(null)
+//get products by category
+const [searchByCategory, setSearchByCategory] = useState(null)
 
 useEffect(() => {
     fetch('https://api.escuelajs.co/api/v1/products')
@@ -43,9 +45,42 @@ const filteredItemsBySearch = (items, search) => {
     return items?.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
 }
 
+const filteredItemsByCategory = (items, searchByCategory) => {
+    return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()))
+}
+
+const filterBy = (searchType, items, search, searchByCategory) => {
+    if (searchType === 'BY_TITLE') {
+        return(
+            filteredItemsBySearch(items,search)
+        )
+    }
+
+    if (searchType === 'BY_CATEGORY') {
+        return(
+            filteredItemsByCategory(items,searchByCategory)
+        )
+    }
+
+    if (!searchType) {
+        return items
+    }
+
+    if (searchType === 'BY_TITLE_AND_CATEGORY') {
+        return(
+            filteredItemsByCategory(items,searchByCategory).filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
+        )
+    }
+}
+
+
+
 useEffect(() => {
-    if(search) setFilteredItems(filteredItemsBySearch(items,search))
-}, [items,search])
+    if(search && !searchByCategory) setFilteredItems(filterBy('BY_TITLE', items, search, searchByCategory))
+    if(!search && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY', items, search, searchByCategory))
+    if(!search && !searchByCategory) setFilteredItems(filterBy(null, items, search, searchByCategory))
+    if(search && searchByCategory) setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY', items, search, searchByCategory))
+}, [items,search, searchByCategory])
 
     return (
         <shoppingCartContext.Provider value={{
@@ -69,7 +104,9 @@ useEffect(() => {
             search,
             setSearch,
             filteredItems,
-            setFilteredItems
+            setFilteredItems,
+            searchByCategory,
+            setSearchByCategory
         }}>
             {children}
         </shoppingCartContext.Provider>
