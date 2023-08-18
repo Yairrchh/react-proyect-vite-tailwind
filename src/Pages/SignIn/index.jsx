@@ -1,26 +1,136 @@
 import { Layout } from "../../Components/Layout"
+import { useContext, useState, useRef } from "react"
+import { Link, Navigate } from "react-router-dom"
+import { shoppingCartContext } from "../../Context"
 
 function SignIn() {
+
+    const context = useContext(shoppingCartContext)
+    const [view, setView] = useState('user-info')
+    const form = useRef(null)
+
+    //Account
+    const account = localStorage.getItem('account')
+    const parsedAccount = JSON.parse(account)
+    // has an account
+    const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
+    const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true
+    const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
+
+    const handleSingIn = () => {
+        const stringifiedSignOut = JSON.stringify(false)
+        localStorage.setItem('sign-out', stringifiedSignOut)
+        context.setSignOut(false)
+        // redirect
+        return <Navigate replace to ={'/'}/>
+    }
+
+    const createAnAccount = () => {
+        const formData = new FormData(form.current)
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            password: formData.get('password')
+        }
+
+        //create account
+        const stringifiedAccount = JSON.stringify(data)
+        localStorage.setItem('account', stringifiedAccount)
+        context.setAccount(data)
+        handleSingIn()
+    }
+
+
+    const renderLogIn = () => {
+        return (
+            <div className='flex flex-col w-80'>
+                <p>
+                    <span className='font-light text-sm'>Email: </span>
+                    <span>{parsedAccount?.email}</span>
+                </p>
+                <p>
+                    <span className='font-light text-sm'>Password: </span>
+                    <span>{parsedAccount?.password}</span>
+                </p>
+                <Link
+                to="/">
+                    <button
+                    className='bg-black disabled:bg-black/40 text-white  w-full rounded-lg py-3 mt-4 mb-2'
+                    onClick={() => handleSingIn()}
+                    disabled={!hasUserAnAccount}>
+                    Log in
+                    </button>
+                </Link>
+                <div className='text-center'>
+                    <a className='font-light text-xs underline underline-offset-4' href='/'>Forgot my password</a>
+                </div>
+                <button
+                    className='border border-black disabled:text-black/40 disabled:border-black/40
+                    rounded-lg mt-6 py-3'
+                    onClick={() => setView('create-user-info')}
+                    disabled={hasUserAnAccount}>
+                    Sign up
+                </button>
+        </div>
+        )
+    }
+
+    const renderCreateUserInfo = () => {
+        return (
+            <form ref={form} className='flex flex-col gap-4 w-80'>
+            <div className='flex flex-col gap-1'>
+                <label htmlFor="name" className='font-light text-sm'>Your name:</label>
+                <input
+                type="text"
+                id="name"
+                name="name"
+                defaultValue={parsedAccount?.name}
+                placeholder="Peter"
+                className='rounded-lg border border-black placeholder:font-light
+                placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'
+            />
+            </div>
+            <div className='flex flex-col gap-1'>
+                <label htmlFor="email" className='font-light text-sm'>Your email:</label>
+                <input
+                type="text"
+                id="email"
+                name="email"
+                defaultValue={parsedAccount?.email}
+                placeholder="hi@helloworld.com"
+                className='rounded-lg border border-black
+                placeholder:font-light placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'
+            />
+            </div>
+            <div className='flex flex-col gap-1'>
+                <label htmlFor="password" className='font-light text-sm'>Your password:</label>
+                <input
+                type="text"
+                id="password"
+                name="password"
+                defaultValue={parsedAccount?.password}
+                placeholder="******"
+                className='rounded-lg border border-black
+                placeholder:font-light placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'
+            />
+            </div>
+            <Link to="/">
+                <button
+                className='bg-black text-white w-full rounded-lg py-3'
+                onClick={() => createAnAccount()}>
+                Create
+                </button>
+            </Link>
+        </form>
+        )
+    }
+
+    const renderView = () => view === 'create-user-info' ? renderCreateUserInfo() : renderLogIn()
+
 return (
     <Layout>
-        <div className="div-login h-screen w-full flex justify-center text-xl mt-7">
-            <div className="cover bg-white w-72 h-96 border-4 rounded-lg shadow-inner border-slate-300 flex
-            flex-col items-center justify-around" >
-                <h1>Sign in</h1>
-                <input className="border rounded-sm border-gray-400 text-center font-light text-lg" type="text" placeholder="USERNAME"></input>
-                <input  className="border rounded-sm border-gray-400 text-center font-light text-lg" type="password" placeholder="PASSWORD"></input>
-
-                <div className="login-btn w-20 rounded-lg text-center cursor-pointer bg-green-400 text-lg">Login</div>
-                <div className="bg-slate-300 w-40 rounded-lg text-center cursor-pointer text-lg">Create account</div>
-
-                <p className="bg-blue-300 w-52 rounded-lg text-center text-lg">Or login using</p>
-
-                <div className="alt-login w-40 h-26 justify-between flex flex-row">
-                        <img className="h-14 w-14" src="https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-3-1.png" alt="Facebook" />
-                        <img className="h-14 w-14" src="https://www.pngmart.com/files/16/official-Google-Logo-PNG-Image.png" alt="google" />
-                </div>
-            </div>
-        </div>
+        <h1 className="font-medium text-xl text-center mb-6 w-80">Welcome</h1>
+        {renderView()}
     </Layout>
 )
 }
