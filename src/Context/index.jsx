@@ -137,7 +137,7 @@ useEffect(() => {
             account,
             setAccount,
             signOut,
-            setSignOut
+            setSignOut,
         }}>
             {children}
         </shoppingCartContext.Provider>

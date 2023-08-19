@@ -9,13 +9,14 @@ function SignIn() {
     const [view, setView] = useState('user-info')
     const form = useRef(null)
 
-    //Account
+      // Account
     const account = localStorage.getItem('account')
     const parsedAccount = JSON.parse(account)
-    // has an account
+    // Has an account
     const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
     const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true
     const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
+
 
     const handleSingIn = () => {
         const stringifiedSignOut = JSON.stringify(false)
