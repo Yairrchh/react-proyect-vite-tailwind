@@ -1,7 +1,11 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { shoppingCartContext } from "../../Context"
 import { ShoppingCart } from "../ShoppingCart"
+
+import { Bars3Icon } from '@heroicons/react/24/solid'
+import { useMediaQuery } from 'react-responsive';
+
 
 const Navbar = () => {
     const activeStyle = 'underline underline-offset-8 rounded-sm bg-green-200 p-0.5'
@@ -26,6 +30,16 @@ const Navbar = () => {
         localStorage.setItem('sign-out', stringifiedSignOut)
         context.setSignOut(true)
     }
+
+    //State MenuBurger
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    //function alter visibility menuBurguer
+    const isTabletOrMobile = useMediaQuery({maxWidth: 767})
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen)
+    }
+
 
 const renderView = () => {
     if (hasUserAnAccount && !isUserSignOut) {
@@ -74,14 +88,20 @@ const renderView = () => {
 
     return (
         <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm  font-light
-        bg-slate-300">
-            <ul className="flex items-center gap-3">
-                <li className="font-semibold text-lg">
+        bg-slate-300 max-md:flex-col max-md:items-start">
+            <div className='flex justify-between max-md:w-full'>
+                <button>
+                    <Bars3Icon className={`${isTabletOrMobile ? 'w-6 h-6' : 'hidden'}`} onClick={toggleMenu} />
+                </button>
+                <NavLink to="/"><p className='text-2xl font-bold'>Shopi</p></NavLink>
+            </div>
+            <ul className={`${isTabletOrMobile ? `${isMenuOpen ? 'flex' : 'hidden'} flex-col items-start gap-3 w-full mb-10` : 'flex items-center gap-3 flex-row'}`}>
+                {/* <li className="font-semibold text-lg">
                     <NavLink
                     to={`${isUserSignOut ? '/sign-in' : '/'}`}>
                         Shopi
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink
                     to='/'
@@ -143,7 +163,7 @@ const renderView = () => {
                     </NavLink>
                 </li>
             </ul>
-            <ul className="flex items-center gap-3">
+            <ul className={`${isTabletOrMobile ? `${isMenuOpen ? 'flex' : 'hidden'} flex-col items-start gap-3 w-full ` : 'flex items-center gap-3 flex-row'}`}>
                 {renderView()}
                 <li className='flex items-center'>
                     <ShoppingCart/>

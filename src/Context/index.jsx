@@ -33,7 +33,7 @@ export const ShoppingCartProvider = ({children}) => {
     // shopping card - increment cuantity
     const [count, setCount] = useState(0);
 
-    // produc detail - open/close
+    // product detail - open/close
     const [isProductDetailOpen, SetIsProductDetailOpen] = useState(false);
     const openProductDetail = () => SetIsProductDetailOpen(true)
     const closeProductDetail = () => SetIsProductDetailOpen(false)

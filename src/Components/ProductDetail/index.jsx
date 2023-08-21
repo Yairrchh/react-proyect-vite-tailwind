@@ -8,17 +8,18 @@ const ProductDetail = () => {
     const context = useContext(shoppingCartContext)
 
     return (
-        <aside className={`${context.isProductDetailOpen ? 'flex' : 'hidden'} product-detail flex-col fixed right-0 border border-black
-        rounded-lg bg-white `}>
+        <aside className={`${context.isProductDetailOpen ? 'block' : 'hidden'} product-detail flex flex-col fixed right-0 border border-black
+        rounded-lg bg-white w-full md:w-[360px] h-[calc(100vh-80px)]`}>
             <div className='flex justify-between items-center p-6'>
                 <h2 className='font-medium text-xl'>Detail</h2>
                 <div onClick={() => context.closeProductDetail()}>
                     <XMarkIcon className='h-6 w-6 text-black cursor-pointer'/>
                 </div>
             </div>
-            <figure className='px-6'>
+            <div className='flex flex-wrap'>
+            <figure className='px-6 w-full'>
                 <img
-                className='w-full h-full rounded-lg'
+                className='w-full h-80 rounded-lg object-cover'
                 src={context.productToShow.images ? context.productToShow.images[0]:''}
                 alt={context.productToShow.title} />
             </figure>
@@ -27,6 +28,7 @@ const ProductDetail = () => {
                 <span className='font-medium text-md'>{context.productToShow.title}</span>
                 <span className='font-light text-sm'>${context.productToShow.description}</span>
             </p>
+            </div>
         </aside>
     )
 }

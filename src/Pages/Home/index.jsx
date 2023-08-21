@@ -16,7 +16,7 @@ function Home() {
             )
             } else {
                 return (
-                    <div className="flex absolute mt-24 ml-72 pl-24 font-medium text-xl">We dont have anything :'(</div>
+                    <div className="flex absolute mt-24 ml-72 pl-24 font-medium text-xl">We dont have anything :\</div>
                 )
             }
         }
@@ -32,7 +32,7 @@ return (
     placeholder="Search a product"
     className="rounded-lg border border-black p-4 w-80 mb-4"
     onChange={(event) => context.setSearch(event.target.value)}></input>
-    <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+    <div className="flex flex-wrap justify-center items-center gap-6  px-5">
         {renderView()}
     </div>
     <ProductDetail/>
