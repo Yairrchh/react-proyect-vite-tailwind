@@ -16,7 +16,7 @@ function Home() {
             )
             } else {
                 return (
-                    <div className="flex absolute mt-24 ml-72 pl-24 font-medium text-xl">We dont have anything :\</div>
+                    <div className="flex items-center mt-5 font-medium text-xl">We dont have anything :\</div>
                 )
             }
         }

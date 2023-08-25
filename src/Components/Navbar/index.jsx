@@ -89,11 +89,11 @@ const renderView = () => {
     return (
         <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm  font-light
         bg-slate-300 max-md:flex-col max-md:items-start">
-            <div className='flex justify-between max-md:w-full'>
+            <div className={`${isTabletOrMobile ? 'flex justify-between max-md:w-full' : 'hidden'}`}>
                 <button>
                     <Bars3Icon className={`${isTabletOrMobile ? 'w-6 h-6' : 'hidden'}`} onClick={toggleMenu} />
                 </button>
-                <NavLink to="/"><p className='text-2xl font-bold'>Shopi</p></NavLink>
+                <NavLink to="/"><p className='text-2xl font-bold mr-3'>Shopi</p></NavLink>
             </div>
             <ul className={`${isTabletOrMobile ? `${isMenuOpen ? 'flex' : 'hidden'} flex-col items-start gap-3 w-full mb-10` : 'flex items-center gap-3 flex-row'}`}>
                 {/* <li className="font-semibold text-lg">
@@ -102,6 +102,7 @@ const renderView = () => {
                         Shopi
                     </NavLink>
                 </li> */}
+                <NavLink to="/"><p className={`${isTabletOrMobile ? 'hidden' : 'text-2xl font-bold'}`}>Shopi</p></NavLink>
                 <li>
                     <NavLink
                     to='/'
