@@ -51,14 +51,14 @@ const renderView = () => {
             <li>
             <NavLink
                 to='/my-orders'
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => toggleMenu()}
                 className={({ isActive }) => isActive ? activeStyle : undefined}>
                 My Orders
             </NavLink>
             </li>
             <li>
             <NavLink
-            onClick={() => setIsMenuOpen(false)}
+            onClick={() => toggleMenu()}
                 to='/my-account'
                 className={({ isActive }) => isActive ? activeStyle : undefined}>
                 My Account
@@ -68,7 +68,7 @@ const renderView = () => {
             <NavLink
                 to='/sign-in'
                 className={({ isActive }) => isActive ? activeStyle : undefined}
-                onClick={() => handleSignOut().setIsMenuOpen(false)}>
+                onClick={() => handleSignOut().toggleMenu()}>
                 Sign out
             </NavLink>
             </li>
@@ -81,7 +81,7 @@ const renderView = () => {
             to="/sign-in"
             className={({ isActive }) => isActive ? activeStyle : undefined }
             onClick={() => handleSignOut().setIsMenuOpen(false)}>
-            Sign out
+            Sign in
             </NavLink>
         </li>
         )
@@ -118,7 +118,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/clothes'
-                    onClick={() => context.setSearchByCategory('clothes').setIsMenuOpen(false)}
+                    onClick={() => context.setSearchByCategory('clothes').toggleMenu()}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -128,7 +128,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/electronics'
-                    onClick={() => context.setSearchByCategory('electronics').setIsMenuOpen(false)}
+                    onClick={() => context.setSearchByCategory('electronics').toggleMenu()}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -138,7 +138,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/furnitures'
-                    onClick={() => context.setSearchByCategory('fornitures').setIsMenuOpen(false)}
+                    onClick={() => context.setSearchByCategory('fornitures').toggleMenu()}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -148,7 +148,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/toys'
-                    onClick={() => context.setSearchByCategory('toys').setIsMenuOpen(false)}
+                    onClick={() => context.setSearchByCategory('toys').toggleMenu()}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -158,7 +158,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/others'
-                    onClick={() => context.setSearchByCategory('others').setIsMenuOpen(false)}
+                    onClick={() => context.setSearchByCategory('others').toggleMenu()}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
