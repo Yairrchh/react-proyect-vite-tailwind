@@ -68,7 +68,7 @@ const renderView = () => {
             <NavLink
                 to='/sign-in'
                 className={({ isActive }) => isActive ? activeStyle : undefined}
-                onClick={() => handleSignOut().toggleMenu()}>
+                onClick={() => {handleSignOut(); toggleMenu()}}>
                 Sign out
             </NavLink>
             </li>
@@ -80,7 +80,7 @@ const renderView = () => {
             <NavLink
             to="/sign-in"
             className={({ isActive }) => isActive ? activeStyle : undefined }
-            onClick={() => handleSignOut().setIsMenuOpen(false)}>
+            onClick={() => {handleSignOut(); toggleMenu()}}>
             Sign in
             </NavLink>
         </li>
@@ -108,7 +108,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/'
-                    onClick={() => context.setSearchByCategory()}
+                    onClick={() => {context.setSearchByCategory(); toggleMenu()}}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -118,7 +118,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/clothes'
-                    onClick={() => context.setSearchByCategory('clothes').toggleMenu()}
+                    onClick={() => {context.setSearchByCategory('clothes'); toggleMenu()}}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -128,7 +128,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/electronics'
-                    onClick={() => context.setSearchByCategory('electronics').toggleMenu()}
+                    onClick={() => {context.setSearchByCategory('electronics'); toggleMenu()}}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -138,7 +138,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/furnitures'
-                    onClick={() => context.setSearchByCategory('fornitures').toggleMenu()}
+                    onClick={() => {context.setSearchByCategory('fornitures'); toggleMenu()}}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -148,7 +148,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/toys'
-                    onClick={() => context.setSearchByCategory('toys').toggleMenu()}
+                    onClick={() => {context.setSearchByCategory('toys'); toggleMenu()}}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
@@ -158,7 +158,7 @@ const renderView = () => {
                 <li>
                     <NavLink
                     to='/others'
-                    onClick={() => context.setSearchByCategory('others').toggleMenu()}
+                    onClick={() => {context.setSearchByCategory('others'); toggleMenu()}}
                     className={({isActive}) =>
                     isActive ? activeStyle : undefined
                     }>
