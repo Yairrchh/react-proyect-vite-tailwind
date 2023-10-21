@@ -61,6 +61,11 @@ const [search, setSearch] = useState(null)
 //get products by category
 const [searchByCategory, setSearchByCategory] = useState(null)
 
+// loading state
+const [loading, setLoading] = useState(true)
+
+
+
 useEffect(() => {
     fetch('https://api.escuelajs.co/api/v1/products')
         .then(response => response.json())
@@ -138,6 +143,8 @@ useEffect(() => {
             setAccount,
             signOut,
             setSignOut,
+            loading,
+            setLoading,
         }}>
             {children}
         </shoppingCartContext.Provider>

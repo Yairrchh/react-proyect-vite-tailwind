@@ -14,13 +14,12 @@ function Home() {
                     <Card key={item.id} data={item} />
                 ))
             )
-            } else {
+            } else if(!context.filteredItems?.length > 0 && !context.loading) {
                 return (
                     <div className="flex items-center mt-5 font-medium text-xl">We dont have anything :\</div>
                 )
             }
         }
-
 
 return (
     <Layout>
