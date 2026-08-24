@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { NavLink } from "react-router-dom"
-import { shoppingCartContext } from "../../Context"
+import { shoppingCartContext } from "../../Context/context"
 import { ShoppingCart } from "../ShoppingCart"
 
 import { Bars3Icon } from '@heroicons/react/24/solid'
@@ -8,7 +8,7 @@ import { useMediaQuery } from 'react-responsive';
 
 
 const Navbar = () => {
-    const activeStyle = 'underline underline-offset-8 rounded-sm bg-green-200 p-0.5'
+    const activeStyle = 'text-accent border-b-2 border-accent pb-0.5'
     const context = useContext(shoppingCartContext)
 
     //SignOut
@@ -41,18 +41,20 @@ const Navbar = () => {
     }
 
 
+const linkStyle = ({isActive}) => `border-b-2 border-transparent hover:text-accent/80 transition-colors ${isActive ? activeStyle : ''}`
+
 const renderView = () => {
     if (hasUserAnAccount && !isUserSignOut) {
         return (
             <>
-            <li className='text-black/60'>
+            <li className='text-paper/50 font-mono text-xs'>
             {parsedAccount?.email}
             </li>
             <li>
             <NavLink
                 to='/my-orders'
                 onClick={() => toggleMenu()}
-                className={({ isActive }) => isActive ? activeStyle : undefined}>
+                className={linkStyle}>
                 My Orders
             </NavLink>
             </li>
@@ -60,14 +62,14 @@ const renderView = () => {
             <NavLink
             onClick={() => toggleMenu()}
                 to='/my-account'
-                className={({ isActive }) => isActive ? activeStyle : undefined}>
+                className={linkStyle}>
                 My Account
             </NavLink>
             </li>
             <li>
             <NavLink
                 to='/sign-in'
-                className={({ isActive }) => isActive ? activeStyle : undefined}
+                className={linkStyle}
                 onClick={() => {handleSignOut(); toggleMenu()}}>
                 Sign out
             </NavLink>
@@ -79,7 +81,7 @@ const renderView = () => {
         <li>
             <NavLink
             to="/sign-in"
-            className={({ isActive }) => isActive ? activeStyle : undefined }
+            className={linkStyle}
             onClick={() => {handleSignOut(); toggleMenu()}}>
             Sign in
             </NavLink>
@@ -89,29 +91,21 @@ const renderView = () => {
     }
 
     return (
-        <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm  font-light
-        bg-slate-300 max-md:flex-col max-md:items-start">
-            <div className={`${isTabletOrMobile ? 'flex justify-between max-md:w-full' : 'hidden'}`}>
+        <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-body
+        bg-ink text-paper border-b border-ink max-md:flex-col max-md:items-start">
+            <div className={`${isTabletOrMobile ? 'flex justify-between items-center max-md:w-full' : 'hidden'}`}>
                 <button>
                     <Bars3Icon className={`${isTabletOrMobile ? 'w-6 h-6' : 'hidden'}`} onClick={toggleMenu} />
                 </button>
-                <NavLink to="/"><p className='text-2xl font-bold mr-3'>Shopi</p></NavLink>
+                <NavLink to="/"><p className='font-display text-lg text-accent tracking-tight mr-3'>SHOPI</p></NavLink>
             </div>
             <ul className={`${isTabletOrMobile ? `${isMenuOpen ? 'flex' : 'hidden'} flex-col items-start gap-3 w-full mb-10` : 'flex items-center gap-3 flex-row'}`}>
-                {/* <li className="font-semibold text-lg">
-                    <NavLink
-                    to={`${isUserSignOut ? '/sign-in' : '/'}`}>
-                        Shopi
-                    </NavLink>
-                </li> */}
-                <NavLink to="/"><p className={`${isTabletOrMobile ? 'hidden' : 'text-2xl font-bold'}`}>Shopi</p></NavLink>
+                <NavLink to="/"><p className={`${isTabletOrMobile ? 'hidden' : 'font-display text-lg text-accent tracking-tight'}`}>SHOPI</p></NavLink>
                 <li>
                     <NavLink
                     to='/'
                     onClick={() => {context.setSearchByCategory(); toggleMenu()}}
-                    className={({isActive}) =>
-                    isActive ? activeStyle : undefined
-                    }>
+                    className={linkStyle}>
                         All
                     </NavLink>
                 </li>
@@ -119,9 +113,7 @@ const renderView = () => {
                     <NavLink
                     to='/clothes'
                     onClick={() => {context.setSearchByCategory('clothes'); toggleMenu()}}
-                    className={({isActive}) =>
-                    isActive ? activeStyle : undefined
-                    }>
+                    className={linkStyle}>
                         Clothes
                     </NavLink>
                 </li>
@@ -129,9 +121,7 @@ const renderView = () => {
                     <NavLink
                     to='/electronics'
                     onClick={() => {context.setSearchByCategory('electronics'); toggleMenu()}}
-                    className={({isActive}) =>
-                    isActive ? activeStyle : undefined
-                    }>
+                    className={linkStyle}>
                         Electronics
                     </NavLink>
                 </li>
@@ -139,9 +129,7 @@ const renderView = () => {
                     <NavLink
                     to='/furnitures'
                     onClick={() => {context.setSearchByCategory('fornitures'); toggleMenu()}}
-                    className={({isActive}) =>
-                    isActive ? activeStyle : undefined
-                    }>
+                    className={linkStyle}>
                         Furnitures
                     </NavLink>
                 </li>
@@ -149,9 +137,7 @@ const renderView = () => {
                     <NavLink
                     to='/toys'
                     onClick={() => {context.setSearchByCategory('toys'); toggleMenu()}}
-                    className={({isActive}) =>
-                    isActive ? activeStyle : undefined
-                    }>
+                    className={linkStyle}>
                         Toys
                     </NavLink>
                 </li>
@@ -159,9 +145,7 @@ const renderView = () => {
                     <NavLink
                     to='/others'
                     onClick={() => {context.setSearchByCategory('others'); toggleMenu()}}
-                    className={({isActive}) =>
-                    isActive ? activeStyle : undefined
-                    }>
+                    className={linkStyle}>
                         Others
                     </NavLink>
                 </li>

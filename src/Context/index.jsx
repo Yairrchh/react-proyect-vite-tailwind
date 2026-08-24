@@ -1,25 +1,36 @@
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { shoppingCartContext } from "./context";
 
-export const shoppingCartContext = createContext();
+const filteredItemsBySearch = (items, search) => {
+    return items?.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
+}
 
-export const initializeLocalStorage = () => {
-    const accountInLocalStorage = localStorage.getItem('account')
-    const signOutInLocalStorage = localStorage.getItem('sign-out')
-    let parsedAccount
-    let parsedSignOut
+const filteredItemsByCategory = (items, searchByCategory) => {
+    return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()))
+}
 
-    if(!accountInLocalStorage) {
-        localStorage.setItem('account', JSON.stringify({}))
-        parsedAccount = {}
-    } else {
-        parsedAccount = JSON.parse(accountInLocalStorage)
+const filterBy = (searchType, items, search, searchByCategory) => {
+    if (searchType === 'BY_TITLE') {
+        return(
+            filteredItemsBySearch(items,search)
+        )
     }
 
-    if(!signOutInLocalStorage) {
-        localStorage.setItem('sign-out', JSON.stringify(false))
-        parsedSignOut = false
-    } else {
-        parsedSignOut = JSON.parse(signOutInLocalStorage)
+    if (searchType === 'BY_CATEGORY') {
+        return(
+            filteredItemsByCategory(items,searchByCategory)
+        )
+    }
+
+    if (!searchType) {
+        return items
+    }
+
+    if (searchType === 'BY_TITLE_AND_CATEGORY') {
+        return(
+            filteredItemsByCategory(items,searchByCategory).filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
+        )
     }
 }
 
@@ -73,45 +84,15 @@ useEffect(() => {
     }, [])
 
 
-const filteredItemsBySearch = (items, search) => {
-    return items?.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
-}
-
-const filteredItemsByCategory = (items, searchByCategory) => {
-    return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()))
-}
-
-const filterBy = (searchType, items, search, searchByCategory) => {
-    if (searchType === 'BY_TITLE') {
-        return(
-            filteredItemsBySearch(items,search)
-        )
-    }
-
-    if (searchType === 'BY_CATEGORY') {
-        return(
-            filteredItemsByCategory(items,searchByCategory)
-        )
-    }
-
-    if (!searchType) {
-        return items
-    }
-
-    if (searchType === 'BY_TITLE_AND_CATEGORY') {
-        return(
-            filteredItemsByCategory(items,searchByCategory).filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
-        )
-    }
-}
-
-
-
 useEffect(() => {
+    if (!items) return
+
     if(search && !searchByCategory) setFilteredItems(filterBy('BY_TITLE', items, search, searchByCategory))
     if(!search && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY', items, search, searchByCategory))
     if(!search && !searchByCategory) setFilteredItems(filterBy(null, items, search, searchByCategory))
     if(search && searchByCategory) setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY', items, search, searchByCategory))
+
+    setLoading(false)
 }, [items,search, searchByCategory])
 
     return (
@@ -149,4 +130,8 @@ useEffect(() => {
             {children}
         </shoppingCartContext.Provider>
     )
+}
+
+ShoppingCartProvider.propTypes = {
+    children: PropTypes.node.isRequired,
 }
