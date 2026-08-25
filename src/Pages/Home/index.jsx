@@ -19,13 +19,19 @@ function Home() {
     }, [context.filteredItems, sortBy])
 
     const renderView = () => {
-            if (sortedItems?.length > 0) {
+            if (context.loading) {
+                return (
+                    Array.from({ length: 8 }).map((_, index) => (
+                        <Card key={`skeleton-${index}`} />
+                    ))
+                )
+            } else if (sortedItems?.length > 0) {
                 return (
                 sortedItems?.map(item => (
                     <Card key={item.id} data={item} />
                 ))
             )
-            } else if(!sortedItems?.length > 0 && !context.loading) {
+            } else {
                 return (
                     <div className="flex flex-col items-center gap-1 mt-10 text-center">
                         <p className="font-display text-lg">No matches</p>
