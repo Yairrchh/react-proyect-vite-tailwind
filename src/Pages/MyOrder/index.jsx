@@ -30,7 +30,7 @@ return (
                         <OrderCard
                             id={product.id}
                             title={product.title}
-                            imageUrl={product.images}
+                            imageUrl={product.images?.[0]}
                             price={product.price}
                             quantity={product.quantity}
                             key={product.id}

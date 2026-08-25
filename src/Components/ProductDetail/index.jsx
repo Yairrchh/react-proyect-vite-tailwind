@@ -3,6 +3,7 @@ import { XMarkIcon, CheckIcon } from '@heroicons/react/24/solid'
 import './style.css'
 import { useContext } from 'react'
 import { shoppingCartContext } from '../../Context/context'
+import { formatCategory } from '../../Context/categories'
 
 const ProductDetail = () => {
     const context = useContext(shoppingCartContext)
@@ -27,7 +28,7 @@ const ProductDetail = () => {
             </div>
             <div className='flex flex-col flex-1 overflow-y-auto'>
             <figure className='tag-hole relative isolate mx-6 w-[calc(100%-3rem)]'>
-                <span className='absolute bottom-2 left-2 bg-ink text-paper font-mono uppercase text-[10px] tracking-wide px-3 py-1 rounded'>{context.productToShow.category?.name}</span>
+                <span className='absolute bottom-2 left-2 bg-ink text-paper font-mono uppercase text-[10px] tracking-wide px-3 py-1 rounded'>{formatCategory(context.productToShow.category)}</span>
                 <img
                 className='w-full h-80 rounded-lg object-cover'
                 src={context.productToShow.images ? context.productToShow.images[0]:''}

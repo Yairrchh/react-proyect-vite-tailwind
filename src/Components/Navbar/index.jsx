@@ -135,10 +135,10 @@ const renderView = () => {
                 </li>
                 <li>
                     <NavLink
-                    to='/toys'
-                    onClick={() => {context.setSearchByCategory('toys'); toggleMenu()}}
+                    to='/beauty'
+                    onClick={() => {context.setSearchByCategory('beauty'); toggleMenu()}}
                     className={linkStyle}>
-                        Toys
+                        Beauty
                     </NavLink>
                 </li>
                 <li>

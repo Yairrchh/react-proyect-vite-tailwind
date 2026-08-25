@@ -30,7 +30,7 @@ const OrderCard = props => {
 OrderCard.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,
-    imageUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+    imageUrl: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     quantity: PropTypes.number,
     handleDelete: PropTypes.func,

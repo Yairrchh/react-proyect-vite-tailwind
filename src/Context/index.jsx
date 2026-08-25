@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { shoppingCartContext } from "./context";
+import { CATEGORY_GROUPS } from "./categories";
 
 const filteredItemsBySearch = (items, search) => {
     return items?.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
 }
 
 const filteredItemsByCategory = (items, searchByCategory) => {
-    return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()))
+    const categorySlugs = CATEGORY_GROUPS[searchByCategory] || []
+    return items?.filter(item => categorySlugs.includes(item.category))
 }
 
 const filterBy = (searchType, items, search, searchByCategory) => {
@@ -78,9 +80,13 @@ const [loading, setLoading] = useState(true)
 
 
 useEffect(() => {
-    fetch('https://api.escuelajs.co/api/v1/products')
+    fetch('https://dummyjson.com/products?limit=194')
         .then(response => response.json())
-        .then(data => setItems(data))
+        .then(data => setItems(data.products))
+        .catch(() => {
+            setItems([])
+            setLoading(false)
+        })
     }, [])
 
 

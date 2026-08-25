@@ -1,6 +1,7 @@
 import { PlusIcon,CheckIcon } from '@heroicons/react/24/solid'
 import { useContext } from "react";
 import { shoppingCartContext } from "../../Context/context";
+import { formatCategory } from "../../Context/categories";
 
 const Card = (data) => {
     const context = useContext(shoppingCartContext)
@@ -49,7 +50,7 @@ const Card = (data) => {
             hover:shadow-lg hover:shadow-ink/10 hover:-translate-y-1 hover:-rotate-1 transition-all duration-300'
             onClick={() => showProduct(data.data)}>
                 <figure className='relative mb-2 w-full h-4/5'>
-                    <span className='absolute bottom-0 left-0 bg-ink text-paper font-mono uppercase text-[10px] tracking-wide m-2 px-3 py-1 rounded'>{data.data.category.name}</span>
+                    <span className='absolute bottom-0 left-0 bg-ink text-paper font-mono uppercase text-[10px] tracking-wide m-2 px-3 py-1 rounded'>{formatCategory(data.data.category)}</span>
                     <img className='w-full h-full object-cover rounded-t-lg' src={data.data.images[0]} alt={data.data.title}/>
                     {renderIcon(data.data.id)}
                 </figure>
